@@ -7,10 +7,9 @@ function Glitch(element, config){
   this.element       = element;
   this.parentElement = element.parentElement;
   this.config        = config;
-
-  this._glitch1       = this._glitch1.bind(this);
-  this._glitch2       = this._glitch2.bind(this);
-  this._glitch3       = this._glitch3.bind(this);
+  this._glitch1      = this._glitch1.bind(this);
+  this._glitch2      = this._glitch2.bind(this);
+  this._glitch3      = this._glitch3.bind(this);
   this._init();
 }
 
@@ -21,8 +20,8 @@ function Glitch(element, config){
 
 
 Glitch.prototype._init = function(){
-  var el           = this.element;
-  var zIndexStart  = this.config.zIndexStart;
+  var el          = this.element;
+  var zIndexStart = this.config.zIndexStart;
 
 
   /* ============================
@@ -237,8 +236,7 @@ Glitch.prototype._glitch3 = function(){
 
 
 Glitch.prototype.destroy = function(){
-  var el = this.element;
-
+  var el              = this.element;
   var noGlitchElement = this.parentElement.querySelector('.no-glitch');
   var glitch1Element  = this.parentElement.querySelector('.glitch-1');
   var glitch2Element  = this.parentElement.querySelector('.glitch-2');
