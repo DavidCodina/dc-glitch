@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="google" value="notranslate">
+  <title>Glitch Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<!-- ===========================================================================
+
+============================================================================ -->
+
+
+<body>
+  <header id="primary-header">
+    <nav id="primary-navbar" class="navbar navbar-expand-sm navbar-dark">
+      <div class="container-fluid">
+        <a id="brand" class="navbar-brand" href="#!">Image Glitch Demo</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="nav-menu" class="collapse navbar-collapse">
+          <div class="navbar-nav ms-auto">
+            <!-- <a class="nav-link link-light" href="#!">Link 1</a>
+            <a class="nav-link link-light" href="#!">Link 2</a>
+            <a class="nav-link link-light" href="#!">Link 3</a> -->
+          </div>
+        </div><!-- <div id="nav-menu" class="collapse navbar-collapse"> -->
+      </div><!-- <div class="container-fluid"> -->
+    </nav>
+  </header>
+
+
+  <main class="py-5">
+    <div class="container-fluid px-md-5">
+
+      <div class="glitch-container-1 ratio ratio-16x9">
+        <div class="glitch-bg-image cat"></div>
+      </div>
+
+      <div class="glitch-container-2">
+        <img class="glitch-img" src="assets/images/holly.jpg" alt="" />
+      </div>
+
+
+      <article class="article">
+        <h2 class="fancy-h2">Overview:</h2>
+
+
+        <p>The <code>Glitch</code> class in this demo is based off of <a href="https://github.com/hmongouachon/mgGlitch" target="_blank">mgGlitch</a>,
+        but with significant modifications. For starters, the jQuery dependency
+        has been removed, there's a lot of refactoring, renaming, and bug fixes.
+        The code works with both background images and actual <code>&#60;img&#62;</code>s.</p>
+
+
+        <p>In all cases there should be both a containing/wrapper element, and the image
+        element.</p>
+
+
+        <!-- Do not put an id on the glitched element as it will be cloned. -->
+        <pre><code>
+  &#60;div class="glitch-container-1 ratio ratio-16x9"&#62;
+    &#60;div class="glitch-bg-image cat"&#62;&#60;/div&#62;
+  &#60;/div&#62;
+
+  &#60;div class="glitch-container-2"&#62;
+    &#60;img class="glitch-img" src="holly.jpg" alt="" /&#62;
+  &#60;/div&#62;
+        </code></pre>
+
+
+        <p>Notice that the image elements are not given an <code>id</code> attribute.
+        <code>Glitch</code> clones them, so it's not advised to use the <code>id</code>
+        attribute on them. As for the containing element, it should be given one of
+        the following styles such that the image childe element will be absolutely positioned against it:</p>
+
+
+        <ul class="mb-5">
+          <li><code>position:relative;</code></li>
+          <li><code>position:absolute;</code></li>
+          <li><code>position:fixed;</code></li>
+        </ul>
+
+
+        <p>In the case of the image child element using a background image one should apply the following styles
+        (or something roughly similar). In the snippet below, the actual <code>background-image</code> property has
+        been separated out into a different selector just so <code>.glitch-bg-image</code>
+        can be reused. The naming of the selectors is arbitrary.</p>
+
+
+        <pre><code>
+  .glitch-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position:center;
+    background-repeat: no-repeat;
+    -webkit-background-size:cover;
+            background-size:cover;
+  }
+
+  .glitch-bg-image.cat {
+    background-image: url('../assets/images/cat.jpg');
+  }
+        </code></pre>
+
+
+        <p>When using <code>&#60;img&#62;</code>s as the image element a slightly
+        different approach is taken. Rather than the child filling the <code>width</code>
+        <em>and</em> <code>height</code> set by the parent container, the child (i.e., the <code>&#60;img&#62;</code>)
+        uses the parent container's <code>width</code>, but it's own
+        default <code>height</code>.</p>
+
+        <p>In order for this to work, we need to ensure that the first child of
+          the container (i.e., the static image -what eventually becomes
+        the <code>.no-glitch</code> element) is <em>not</em> <code>position:absolute</code>.
+        We cannot actually use the <code>.no-glitch</code> class selector to style this element
+        because that class is removed if/when <code>destroy()</code> is invoked.</p>
+
+
+        <pre><code>
+  img.glitch-img {
+    display:block; /* optional */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  img.glitch-img:first-child {
+    position: static; /* or position:relative; */
+  }
+        </code></pre>
+
+
+        <p><strong>Note:</strong> When setting these styles make sure that they are not overwritten
+        by some other selector with higher specificity.</p>
+
+
+        <!-- =============================================================== -->
+
+
+        <h3 class="mt-5 text-secondary">destroy()</h3>
+
+
+        <p><code>Glitch</code> has one method intended for public use: <code>destroy()</code>.
+        This method will remove the cloned glitch images, and all classes and styles
+        that were programmatically applied.</p>
+      </article>
+    </div><!-- <div class="container-fluid px-md-5"> -->
+  </main>
+
+
+  <!-- =========================================================================
+
+  ========================================================================== -->
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <script src="js/dc-glitch.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
