@@ -90,7 +90,7 @@ Glitch.prototype._init = function(){
 
 
 Glitch.prototype._insertAfter = function(newNode, existingNode){
-  existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+  existingNode.parentNode.insertBefore(newNode, existingNode.nextElementSibling);
 };
 
 
