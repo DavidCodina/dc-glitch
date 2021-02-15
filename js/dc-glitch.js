@@ -131,7 +131,7 @@ Glitch.prototype._glitch1 = function(){
 	var randomTime     = this._getRandomInt(glitch1TimeMin, glitch1TimeMax);
 	// Adjust _getRandomInt() args for smaller/larger horizontal disposition.
 	if (this._randomBoolean()){ var leftValue =       this._getRandomInt(0, 16) + 'px'; }
-	else {                     v ar leftValue = '-' + this._getRandomInt(0, 16) + 'px'; }
+	else {                      var leftValue = '-' + this._getRandomInt(0, 16) + 'px'; }
 
 
 	glitch1Element.style.clip  = 'rect('+clipPos1+'px, '+clipPos2+'px, '+clipPos3+'px,' + clipPos4 +'px)';
